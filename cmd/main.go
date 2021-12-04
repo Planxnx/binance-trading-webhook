@@ -18,7 +18,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	loggermiddleware "github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/joho/godotenv"
 	"github.com/shopspring/decimal"
 	"go.uber.org/zap"
 )
@@ -37,10 +36,11 @@ var (
 func init() {
 
 	//TODO: refactor this to use a config file
-	err := godotenv.Load()
-	if err != nil {
-		logger.Fatal("Failed to load .env", zap.Error(err))
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	logger.Fatal("Failed to load .env", zap.Error(err))
+	// }
+	var err error
 	symbol = os.Getenv("SYMBOL")
 	BINANCE_API_KEY = os.Getenv("BINANCE_API_KEY")
 	BINANCE_API_SECRET = os.Getenv("BINANCE_API_SECRET")
