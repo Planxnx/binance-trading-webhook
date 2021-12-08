@@ -18,6 +18,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	loggermiddleware "github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/joho/godotenv"
 	"github.com/shopspring/decimal"
 	"go.uber.org/zap"
 )
@@ -36,11 +37,10 @@ var (
 func init() {
 
 	//TODO: refactor this to use a config file
-	// err := godotenv.Load()
-	// if err != nil {
-	// 	logger.Fatal("Failed to load .env", zap.Error(err))
-	// }
-	var err error
+	err := godotenv.Load()
+	if err != nil {
+		logger.Fatal("Failed to load .env", zap.Error(err))
+	}
 	symbol = os.Getenv("SYMBOL")
 	BINANCE_API_KEY = os.Getenv("BINANCE_API_KEY")
 	BINANCE_API_SECRET = os.Getenv("BINANCE_API_SECRET")
@@ -146,6 +146,13 @@ func main() {
 	shutdownTimeout := 30 * time.Second
 	gracefullShutdownCtx, cancelShutdown := context.WithTimeout(context.Background(), shutdownTimeout)
 	defer cancelShutdown()
+
+	go func() {
+		<-signalChan
+		cancelShutdown()
+		logger.Info("os.Interrupt(2) - Force Shutting down...\n")
+		os.Exit(1)
+	}()
 
 	if err := app.Shutdown(); err != nil {
 		logger.Error(err.Error(), zap.String("action", "shutdown server"))
