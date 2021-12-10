@@ -39,7 +39,7 @@ func init() {
 	//TODO: refactor this to use a config file
 	err := godotenv.Load()
 	if err != nil {
-		logger.Fatal("Failed to load .env", zap.Error(err))
+		logger.Error("Failed to load .env", zap.Error(err))
 	}
 	symbol = os.Getenv("SYMBOL")
 	BINANCE_API_KEY = os.Getenv("BINANCE_API_KEY")

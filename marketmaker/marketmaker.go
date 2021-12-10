@@ -1,11 +1,14 @@
 package marketmaker
 
 import (
+	"binance-trading-webhook/pkg/logger"
 	"os"
 	"strconv"
 
 	"github.com/adshao/go-binance/v2/futures"
+	"github.com/joho/godotenv"
 	"github.com/shopspring/decimal"
+	"go.uber.org/zap"
 )
 
 var (
@@ -29,9 +32,9 @@ func init() {
 
 	//TODO: refactor this to use a config file
 
-	// if err := godotenv.Load(); err != nil {
-	// 	logger.Fatal("Failed to load .env", zap.Error(err))
-	// }
+	if err := godotenv.Load(); err != nil {
+		logger.Error("Failed to load .env", zap.Error(err))
+	}
 
 	tp := os.Getenv("TAKE_PROFIT")
 	if tp != "" {
