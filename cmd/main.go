@@ -164,11 +164,11 @@ func main() {
 		logger.Error(err.Error(), zap.String("action", "shutdown market price client"))
 	}
 
-	if err := mmakerClient.CancelAllOpenOrdersService(gracefullShutdownCtx); err != nil {
-		logger.Error(err.Error(), zap.String("action", "cancel-all-open-orders"))
-	}
-	if err := mmakerClient.CloseAllPosition(gracefullShutdownCtx); err != nil {
-		logger.Error(err.Error(), zap.String("action", "close-all-position"))
-	}
+	// if err := mmakerClient.CancelAllOpenOrdersService(gracefullShutdownCtx); err != nil {
+	// 	logger.Error(err.Error(), zap.String("action", "cancel-all-open-orders"))
+	// }
+	// if err := mmakerClient.CloseAllPosition(gracefullShutdownCtx); err != nil {
+	// 	logger.Error(err.Error(), zap.String("action", "close-all-position"))
+	// }
 
 }
